@@ -1,6 +1,6 @@
 package api.qualityevents.service;
 
-import lombok.NonNull;
+import domain.qualityevents.usecases.AuditAndPublishQualityEventsUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/events")
 public class PushBatchEventsController {
 
-    @PostMapping("/new-load")
-    public ResponseEntity<Void> pushNewEvents(@RequestParam(required = false) int count) {
-//        Add business logic
-        return ResponseEntity.noContent().build();
-    }
+  private final AuditAndPublishQualityEventsUseCase auditAndPublishQualityEventsUseCase;
 
+  @PostMapping("/batch-load")
+  public ResponseEntity<Void> pushNewEvents(@RequestParam(required = false) int count) {
+    auditAndPublishQualityEventsUseCase.generate(count);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping("/simple-load")
+  public ResponseEntity<Void> pushEvent() {
+    auditAndPublishQualityEventsUseCase.generateOne();
+    return ResponseEntity.noContent().build();
+  }
 }

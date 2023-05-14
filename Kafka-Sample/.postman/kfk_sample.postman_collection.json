@@ -1,0 +1,52 @@
+{
+	"info": {
+		"_postman_id": "ae53de6e-1958-43c6-9afd-5150567bd241",
+		"name": "kfk_sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27395387"
+	},
+	"item": [
+		{
+			"name": "Pub One",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/simple-load",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"simple-load"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pub batch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/batch-load?count=1000",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"batch-load"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "1000"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
