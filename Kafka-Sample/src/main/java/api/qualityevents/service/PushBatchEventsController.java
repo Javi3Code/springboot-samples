@@ -1,4 +1,4 @@
-package api;
+package api.qualityevents.service;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
