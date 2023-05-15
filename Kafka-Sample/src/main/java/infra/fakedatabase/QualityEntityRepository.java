@@ -6,6 +6,7 @@ import domain.qualityevents.ports.QualityEntityRetriever;
 import java.time.OffsetDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
 @Component
@@ -14,7 +15,11 @@ public class QualityEntityRepository implements QualityEntityRetriever {
   private final Faker faker;
 
   @Override
-  public QualityEvent retrieve() {
+  public Mono<QualityEvent> retrieve() {
+    return Mono.just(getOne());
+  }
+
+  private QualityEvent getOne() {
     final var id = faker.random().hex();
     final var origin = faker.address().city();
     final var atDate = OffsetDateTime.now();

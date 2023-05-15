@@ -2,23 +2,19 @@ package infra.kafka.qualityevents.adapters;
 
 import domain.qualityevents.entities.QualityEvent;
 import domain.qualityevents.ports.QualityEventsPublisher;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaOperations.OperationsCallback;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 
 @Slf4j
 @RequiredArgsConstructor
-@Service
+@Component
 public class QualityEventsPublisherAdapter implements QualityEventsPublisher {
 
   private static final String PUBLISHING_AN_QUALITY_EVENT_LOG = """
@@ -32,29 +28,24 @@ public class QualityEventsPublisherAdapter implements QualityEventsPublisher {
   private final KafkaTemplate<String, QualityEvent> qualityEventKafkaTemplate;
 
   @Override
-  public void publish(QualityEvent qualityEvent) {
-    qualityEventKafkaTemplate.send(topic, qualityEvent)
-        .whenCompleteAsync(
-            (res, throwable) -> log.info(PUBLISHING_AN_QUALITY_EVENT_LOG, qualityEvent.id()));
+  public Mono<Void> publishOne(Mono<QualityEvent> qualityEvent) {
+    return qualityEvent.flatMap(event ->
+        Mono.fromCompletionStage(qualityEventKafkaTemplate.send(topic, event))
+            .doOnError(res -> log.error(PUBLISHING_AN_QUALITY_EVENT_LOG, event.id()))
+            .then()
+    );
   }
 
   @Override
-  public void publish(Set<QualityEvent> qualityEvents) {
-    Objects.requireNonNull(
-            qualityEventKafkaTemplate.executeInTransaction(executeAll(qualityEvents)),
-            "The push-events transaction returned null")
-        .forEach(printLogAsync());
+  public Mono<Void> publishAll(Mono<Set<QualityEvent>> qualityEvents) {
+    return qualityEventKafkaTemplate.executeInTransaction(client ->
+        qualityEvents.flatMapMany(Flux::fromIterable)
+            .parallel()
+            .map(event -> client.send(topic, event))
+            .doOnNext(asyncEvent -> asyncEvent.whenCompleteAsync(
+                (res, throwable) -> log.error(PUBLISHING_AN_QUALITY_EVENT_LOG,
+                    res.getProducerRecord().value().id())))
+            .then());
   }
 
-  private OperationsCallback<String, QualityEvent, List<CompletableFuture<SendResult<String, QualityEvent>>>>
-  executeAll(Set<QualityEvent> qualityEvents) {
-    return client ->
-        qualityEvents.parallelStream().map(event -> client.send(topic, event)).toList();
-  }
-
-  private static Consumer<CompletableFuture<SendResult<String, QualityEvent>>> printLogAsync() {
-    return asyncEvent -> asyncEvent.whenCompleteAsync(
-        (res, throwable) -> log.info(PUBLISHING_AN_QUALITY_EVENT_LOG,
-            res.getProducerRecord().value().id()));
-  }
 }

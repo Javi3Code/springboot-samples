@@ -1,4 +1,7 @@
 version: '3.8'
+volumes:
+  my-kafka-data:
+    driver: local
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -8,6 +11,8 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - kafka-data:/var/lib/kafka/data
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -19,10 +24,12 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT #Develop porpoise
       KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
 
   ksqldb-server:
     image: confluentinc/ksqldb-server:latest
@@ -36,6 +43,8 @@ services:
       KSQL_LISTENERS: "http://0.0.0.0:8088"
       KSQL_BOOTSTRAP_SERVERS: "kafka:29092"
       KSQL_CACHE_MAX_BYTES_BUFFERING: "0"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
 
   ksqldb-cli:
     image: confluentinc/ksqldb-cli:latest
@@ -44,6 +53,8 @@ services:
       - ksqldb-server
     entrypoint: /bin/sh
     tty: true
+    volumes:
+      - kafka-data:/var/lib/kafka/data
 
   kafka-sample:
     build: .
@@ -52,5 +63,3 @@ services:
       - "8080:8080"
     depends_on:
       - ksqldb-cli
-    environment:
-      - SPRING_PROFILES_ACTIVE=standalone

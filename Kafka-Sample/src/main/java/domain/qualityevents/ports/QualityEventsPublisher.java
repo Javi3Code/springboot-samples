@@ -1,13 +1,13 @@
 package domain.qualityevents.ports;
 
 import domain.qualityevents.entities.QualityEvent;
-
 import java.util.Set;
+import reactor.core.publisher.Mono;
 
 public interface QualityEventsPublisher {
 
-    void publish(QualityEvent qualityEvent);
+  Mono<Void> publishOne(Mono<QualityEvent> qualityEvent);
 
-    void publish(Set<QualityEvent> qualityEvents);
+  Mono<Void> publishAll(Mono<Set<QualityEvent>> qualityEvents);
 
 }
