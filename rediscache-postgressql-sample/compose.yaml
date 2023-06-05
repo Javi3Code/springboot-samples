@@ -3,3 +3,11 @@ services:
     image: 'redis:latest'
     ports:
       - '6379'
+  red-pos-sam-writer:
+    image: 'red-pos-sam'
+    ports:
+      - '8080:8080'
+  red-pos-sam-reader:
+    image: 'red-pos-sam'
+    ports:
+      - '8080:8081'

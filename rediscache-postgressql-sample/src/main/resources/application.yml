@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: standalone
+---
+server:
+  servlet:
+    context-path: /red-pos-sam
+spring:
+  config:
+    activate:
+      on-profile: standalone
