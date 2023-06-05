@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: standalone
+---
+server:
+  servlet:
+    context-path: /kfk-sample
+spring:
+  config:
+    activate:
+      on-profile: standalone
+  kafka:
+    bootstrap-servers: localhost:9092
+    template:
+      default-topic: quality-events
+    consumer:
+      bootstrap-servers: ${spring.kafka.bootstrap-servers}
+      group-id: invalid-events-listener-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.JsonDesSerializer
+    producer:
+      bootstrap-servers: ${spring.kafka.bootstrap-servers}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.JsonSerializer
