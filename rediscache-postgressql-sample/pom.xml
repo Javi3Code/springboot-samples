@@ -60,7 +60,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<outputDirectory>${project.build.directory}/artifact</outputDirectory>
+					<outputDirectory>${project.basedir}/artifact</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
