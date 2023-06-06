@@ -15,7 +15,7 @@ services:
     environment:
       - POSTGRES_USER=jeycode
       - POSTGRES_PASSWORD=jeycode
-      - POSTGRES_DB=store-sample
+      - POSTGRES_DB=store-online-sample
   red-pos-sam-writer:
     image: 'red-pos-sam'
     ports:
