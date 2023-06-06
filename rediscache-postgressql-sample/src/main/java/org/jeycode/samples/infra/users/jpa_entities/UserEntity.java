@@ -15,12 +15,11 @@ import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.annotations.DynamicUpdate;
 import org.jeycode.samples.infra.orders.jpa_entities.OrderEntity;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(exclude = "orders")
+@ToString
 @Entity
 @Table(indexes = @Index(name = "idx_user_username", columnList = "username"))
 public class UserEntity {
@@ -51,10 +50,5 @@ public class UserEntity {
   @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
   @OrderBy("status = 'COMPLETED' DESC")
   private Set<OrderEntity> orders;
-
-  public void addOrder(final OrderEntity order) {
-    orders.add(order);
-    order.setUser(this);
-  }
 
 }
