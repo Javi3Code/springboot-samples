@@ -29,9 +29,16 @@ spring:
       ddl-auto: update
     show-sql: true
   cache:
+    cache-names: users, orders, books
+    users:
+      ttl: 30
+    orders:
+      ttl: 30
+    books:
+      ttl: 30
     type: redis
   redis:
-    host: redis
+    host: redis-cache
     port: 6379
 
 mocks:

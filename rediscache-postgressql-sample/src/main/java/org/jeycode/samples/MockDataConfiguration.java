@@ -67,7 +67,7 @@ public class MockDataConfiguration {
 
     userRepository.saveAll(generatedUsers);
 
-    auditor.info("Generated books: " + generatedBooks.size());
-    auditor.info("Generated users: " + generatedUsers.size());
+    logger.info("Generated books: " + generatedBooks.size());
+    logger.info("Generated users: " + generatedUsers.size());
   }
 }
