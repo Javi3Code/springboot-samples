@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsernameGenerator {
 
-  private final Random randomGenerator = new Random();
   private final UserDataPort userDataPort;
 
   public String generate(final String name, final String lastname) {
@@ -22,10 +21,10 @@ public class UsernameGenerator {
     final var random = new Random();
     String username;
     do {
-      final var firstPart = parsedName.substring(0, random.nextInt(nameLength - 1));
-      final var secondPart = parsedLastname.substring(0, random.nextInt(lastNameLength - 1));
+      final var firstPart = parsedName.substring(0, random.nextInt(nameLength) - 1);
+      final var secondPart = parsedLastname.substring(0, random.nextInt(lastNameLength) - 1);
       username = firstPart + secondPart;
-    } while (!userDataPort.existsBy(username));
+    } while (userDataPort.existsBy(username));
     return username;
   }
 
