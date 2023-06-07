@@ -30,17 +30,15 @@ spring:
     show-sql: true
   cache:
     cache-names: users, orders, books
-    users:
-      ttl: 30
-    orders:
-      ttl: 30
-    books:
-      ttl: 30
+    ttl:
+      books: 960
+      users: 60
+      orders: 20
     type: redis
   redis:
     host: redis
     port: 6379
 
 mocks:
-  books: 100
-  users: 20
+  books: 10000
+  users: 100

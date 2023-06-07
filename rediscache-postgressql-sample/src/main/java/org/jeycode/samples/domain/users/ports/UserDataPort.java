@@ -18,4 +18,8 @@ public interface UserDataPort {
 
   void update(final User user);
 
+  boolean existsBy(final String username);
+
+  boolean existsBy(final long id);
+
 }

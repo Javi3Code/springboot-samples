@@ -10,8 +10,7 @@ services:
     volumes:
       - 'redis-data:/data'
     environment:
-      - REDIS_MAXMEMORY=10MB
-      - REDIS_MAXMEMORY_POLICY=allkeys-lru
+      - REDIS_MAXMEMORY=30MB
       - REDIS_MAXCLIENTS=2
   postgresDB:
     image: 'postgres:latest'

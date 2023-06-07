@@ -75,6 +75,16 @@ public class UserDataAdapter implements UserDataPort {
     save(updatedUser);
   }
 
+  @Override
+  public boolean existsBy(final String username) {
+    return userRepository.existsByUsernameIgnoreCase(username);
+  }
+
+  @Override
+  public boolean existsBy(final long id) {
+    return userRepository.existsById(id);
+  }
+
   @Transactional
   @Caching(evict = {
       @CacheEvict(value = USERS_CACHE, key = "#username.charAt(0) + '*'"),

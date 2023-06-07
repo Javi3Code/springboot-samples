@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "bea4a912-ae34-49c9-a62d-0e402144a7c4",
+		"name": "redis-postgres sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27395387"
+	},
+	"item": [
+		{
+			"name": "Get User By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-reader}}/v1/users/:id",
+					"host": [
+						"{{url-reader}}"
+					],
+					"path": [
+						"v1",
+						"users",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-reader}}/v1/users",
+					"host": [
+						"{{url-reader}}"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"JeyCode\",\n    \"lastname\": \"Jey Code\",\n    \"email\": \"jjj@gmail.com\",\n    \"address\": \"C/ GitHub\",\n    \"phoneNumber\": \"+23424242424\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-writer}}/v1/users",
+					"host": [
+						"{{url-writer}}"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"0\",\n    \"firstname\": \"JeyCode\",\n    \"lastname\": \"Jey Code\",\n    \"email\": \"jjj@gmail.com\",\n    \"address\": \"C/ GitHub\",\n    \"phoneNumber\": \"+23424242424\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-writer}}/v1/users",
+					"host": [
+						"{{url-writer}}"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  users by username begins with",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-reader}}/v1/users?username=",
+					"host": [
+						"{{url-reader}}"
+					],
+					"path": [
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  users with pending orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-reader}}/v1/pending-orders/users",
+					"host": [
+						"{{url-reader}}"
+					],
+					"path": [
+						"v1",
+						"pending-orders",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

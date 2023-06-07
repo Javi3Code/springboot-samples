@@ -4,7 +4,10 @@ import com.github.javafaker.Faker;
 import jakarta.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.Year;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,8 +53,6 @@ public class MockDataConfiguration {
             }
         ).toList();
 
-    bookRepository.saveAll(generatedBooks);
-
     final var generatedUsers = IntStream.range(0, users)
         .mapToObj(i -> {
           final var user = new UserEntity();
@@ -65,9 +66,27 @@ public class MockDataConfiguration {
         })
         .toList();
 
-    userRepository.saveAll(generatedUsers);
+    logger.info("Generating books: " + generatedBooks.size());
+    logger.info("Generating users: " + generatedUsers.size());
 
-    logger.info("Generated books: " + generatedBooks.size());
-    logger.info("Generated users: " + generatedUsers.size());
+    final var batchSize = 3000;
+    final var maxThreads = 8;
+    final var threadCount = Math.min((generatedBooks.size() + batchSize - 1) / batchSize, maxThreads);
+    final var threadPool = Executors.newFixedThreadPool(threadCount);
+
+    for (int i = 0; i < generatedUsers.size(); i += batchSize) {
+      final List<UserEntity> batch = generatedUsers.subList(i, Math.min(i + batchSize, generatedUsers.size()));
+      CompletableFuture.runAsync(() ->
+          userRepository.saveAllAndFlush(batch), threadPool);
+    }
+
+    for (int i = 0; i < generatedBooks.size(); i += batchSize) {
+      final List<BookEntity> batch = generatedBooks.subList(i, Math.min(i + batchSize, generatedBooks.size()));
+      CompletableFuture.runAsync(() ->
+          bookRepository.saveAllAndFlush(batch), threadPool);
+    }
+
+    threadPool.shutdown();
+
   }
 }
