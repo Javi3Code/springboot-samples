@@ -13,7 +13,6 @@ services:
       - REDIS_MAXMEMORY=10MB
       - REDIS_MAXMEMORY_POLICY=allkeys-lru
       - REDIS_MAXCLIENTS=2
-      - REDIS_HOST=redis-cache
   postgresDB:
     image: 'postgres:latest'
     container_name: postgresDB

@@ -1,4 +1,7 @@
 package org.jeycode.samples.domain.users.models;
+
+import java.io.Serializable;
+
 public record User(
     long id,
     String username,
@@ -7,6 +10,6 @@ public record User(
     String email,
     String address,
     String phoneNumber
-) {
+) implements Serializable {
 
 }

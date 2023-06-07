@@ -1,7 +1,7 @@
-package org.jeycode.samples.infra.users.adapters;
+package org.jeycode.samples.infra.orders.mapper;
 
-import org.jeycode.samples.domain.users.models.User;
-import org.jeycode.samples.infra.users.jpa_entities.UserEntity;
+import org.jeycode.samples.domain.orders.models.Order;
+import org.jeycode.samples.infra.orders.jpa_entities.OrderEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants.ComponentModel;
@@ -10,13 +10,13 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = ComponentModel.SPRING)
-public interface UserEntityMapper {
+public interface OrderEntityMapper {
 
-  UserEntity toEntity(User user);
+  OrderEntity toEntity(Order order);
 
-  User toDto(UserEntity userEntity);
+  Order toDto(OrderEntity orderEntity);
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  UserEntity partialUpdate(User user,
-      @MappingTarget UserEntity userEntity);
+  OrderEntity partialUpdate(Order order,
+      @MappingTarget OrderEntity orderEntity);
 }

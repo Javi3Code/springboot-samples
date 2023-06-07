@@ -1,7 +1,7 @@
-package org.jeycode.samples.infra.orders.adapters;
+package org.jeycode.samples.infra.books.mapper;
 
-import org.jeycode.samples.domain.orders.models.Order;
-import org.jeycode.samples.infra.orders.jpa_entities.OrderEntity;
+import org.jeycode.samples.domain.books.models.Book;
+import org.jeycode.samples.infra.books.jpa_entities.BookEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants.ComponentModel;
@@ -10,13 +10,13 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = ComponentModel.SPRING)
-public interface OrderEntityMapper {
+public interface BookEntityMapper {
 
-  OrderEntity toEntity(Order order);
+  BookEntity toEntity(Book book);
 
-  Order toDto(OrderEntity orderEntity);
+  Book toDto(BookEntity bookEntity);
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  OrderEntity partialUpdate(Order order,
-      @MappingTarget OrderEntity orderEntity);
+  BookEntity partialUpdate(Book book,
+      @MappingTarget BookEntity bookEntity);
 }

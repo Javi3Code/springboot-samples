@@ -1,5 +1,6 @@
 package org.jeycode.samples.domain.orders.models;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -12,7 +13,7 @@ public record Order(
     OffsetDateTime rentalEndDate,
     BigDecimal totalPrice,
     OrderStatus status
-) {
+) implements Serializable {
 
 }
 

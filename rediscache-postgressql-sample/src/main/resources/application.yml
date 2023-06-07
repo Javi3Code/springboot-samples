@@ -38,7 +38,7 @@ spring:
       ttl: 30
     type: redis
   redis:
-    host: redis-cache
+    host: redis
     port: 6379
 
 mocks:

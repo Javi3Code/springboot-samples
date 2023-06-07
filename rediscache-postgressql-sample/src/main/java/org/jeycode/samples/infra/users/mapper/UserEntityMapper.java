@@ -1,7 +1,7 @@
-package org.jeycode.samples.infra.books.adapters;
+package org.jeycode.samples.infra.users.mapper;
 
-import org.jeycode.samples.domain.books.models.Book;
-import org.jeycode.samples.infra.books.jpa_entities.BookEntity;
+import org.jeycode.samples.domain.users.models.User;
+import org.jeycode.samples.infra.users.jpa_entities.UserEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants.ComponentModel;
@@ -10,13 +10,13 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = ComponentModel.SPRING)
-public interface BookEntityMapper {
+public interface UserEntityMapper {
 
-  BookEntity toEntity(Book book);
+  UserEntity toEntity(User user);
 
-  Book toDto(BookEntity bookEntity);
+  User toDto(UserEntity userEntity);
 
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  BookEntity partialUpdate(Book book,
-      @MappingTarget BookEntity bookEntity);
+  UserEntity partialUpdate(User user,
+      @MappingTarget UserEntity userEntity);
 }
