@@ -43,7 +43,7 @@ Postman, and you will have a collection with pre-configured requests for the ava
 ## Fake Data
 
 During startup, the application adds fake data using the Java Faker library. You can view the generated data in the
-[mockdataconfiguration.class](https://github.com/Javi3Code/springboot-samples/blob/sample/redis-postgres/rediscache-postgressql-sample/src/main/java/org/jeycode/samples/MockDataConfiguration.java).
+[mockdataconfiguration.class](https://github.com/Javi3Code/springboot-samples/blob/main/rediscache-postgressql-sample/src/main/java/org/jeycode/samples/MockDataConfiguration.java).
 This data provides a starting point for testing and interacting with the application.
 
 ## Conclusion
