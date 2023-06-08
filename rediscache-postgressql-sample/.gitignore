@@ -21,3 +21,6 @@ target/
 
 ### VS Code ###
 .vscode/
+artifact/*.jar
+data
+postgres_data
