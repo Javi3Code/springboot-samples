@@ -3,12 +3,13 @@ package org.jeycode.samples.api_rest.users.controllers;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.jeycode.samples.domain.users.dto.RegistrableUserDto;
 import org.jeycode.samples.domain.users.dto.UpdatableUserDto;
 import org.jeycode.samples.domain.users.dto.UserBasicInfoDto;
-import org.jeycode.samples.domain.users.dto.UserRegistrableDto;
 import org.jeycode.samples.domain.users.models.User;
 import org.jeycode.samples.domain.users.usecases.CreateUserUseCase;
 import org.jeycode.samples.domain.users.usecases.GetUserByIdUseCase;
@@ -38,7 +39,7 @@ public class UserController {
 
 
   @GetMapping("api/v1/users/{id}")
-  public ResponseEntity<User> getOneBy(@PathVariable(value = "id", required = true) final long id) {
+  public ResponseEntity<User> getOneBy(@PathVariable(value = "id", required = true) @Valid @Positive final long id) {
     return ResponseEntity.ok(getUserByIdUseCase.get(id));
   }
 
@@ -58,14 +59,15 @@ public class UserController {
   }
 
   @PostMapping("api/v1/users")
-  public ResponseEntity<Void> createUser(@RequestBody(required = true) @Valid final UserRegistrableDto userRegistrable) {
-    createUserUseCase.create(userRegistrable);
+  public ResponseEntity<Void> createUser(@RequestBody(required = true) @Valid final RegistrableUserDto user) {
+    createUserUseCase.create(user);
     return ResponseEntity.status(CREATED).build();
   }
 
   @PatchMapping("api/v1/users/{id}")
-  public ResponseEntity<Void> updateUser(@RequestBody(required = true) @Valid final UpdatableUserDto updatableUser) {
-    updateUserUseCase.update(updatableUser);
+  public ResponseEntity<Void> updateUser(@PathVariable(value = "id", required = true) @Valid @Positive final long id,
+      @RequestBody(required = true) @Valid final UpdatableUserDto user) {
+    updateUserUseCase.update(id, user);
     return ResponseEntity.noContent().build();
   }
 

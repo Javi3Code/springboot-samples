@@ -6,4 +6,8 @@
 {
   docker volume rm rediscache-postgressql-sample_postgres-data
 }
+[[ "${$(docker volume ls | awk '{print $2}')[*]}" =~ "rediscache-postgressql-sample_redis-data" ]] &&
+{
+  docker volume rm rediscache-postgressql-sample_redis-data
+}
 docker build . -t red-pos-sam

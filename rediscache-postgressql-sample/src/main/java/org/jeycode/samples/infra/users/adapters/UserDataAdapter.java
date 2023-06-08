@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeycode.samples.domain.orders.models.OrderStatus;
 import org.jeycode.samples.domain.users.models.User;
 import org.jeycode.samples.domain.users.ports.UserDataPort;
-import org.jeycode.samples.infra.users.jpa_entities.UserEntity;
 import org.jeycode.samples.infra.users.mapper.UserEntityMapper;
 import org.jeycode.samples.infra.users.repositories.UserRepository;
 import org.springframework.cache.annotation.CacheEvict;
@@ -52,7 +51,7 @@ public class UserDataAdapter implements UserDataPort {
         .toList();
   }
 
-  @Cacheable(value = USERS_CACHE, key = "#orderStatus", condition = "#orderStatus == OrderStatus.ACTIVE")
+  @Cacheable(value = USERS_CACHE, key = "#orderStatus", condition = "#orderStatus == T(org.jeycode.samples.domain.orders.models.OrderStatus).ACTIVE")
   @Override
   public List<User> getAllByOrderStatus(final OrderStatus orderStatus) {
     logger.info("getAllUsersByOrderStatus -- db action -- orderStatus: [{}]", orderStatus);
@@ -61,18 +60,31 @@ public class UserDataAdapter implements UserDataPort {
         .toList();
   }
 
+  @Caching(evict = {
+      @CacheEvict(value = USERS_CACHE, key = "#user.username().charAt(0)"),
+      @CacheEvict(value = USERS_CACHE, key = "#user.username().substring(0, 2)"),
+      @CacheEvict(value = USERS_CACHE, key = "#user.username().substring(0, 3)"),
+      @CacheEvict(value = USERS_CACHE, key = ALL_USERS)
+  })
+  @Transactional
   @Override
   public void register(final User user) {
     final var newUser = userEntityMapper.toEntity(user);
-    save(newUser);
+    userRepository.save(newUser);
   }
 
-
+  @Caching(evict = {
+      @CacheEvict(value = USERS_CACHE, key = "#user.username().charAt(0)"),
+      @CacheEvict(value = USERS_CACHE, key = "#user.username().substring(0, 2)"),
+      @CacheEvict(value = USERS_CACHE, key = "#user.username().substring(0, 3)"),
+      @CacheEvict(value = USERS_CACHE, key = ALL_USERS)
+  })
+  @Transactional
   @Override
   public void update(final User user) {
     final var userEntity = userRepository.getReferenceById(user.id());
     final var updatedUser = userEntityMapper.partialUpdate(user, userEntity);
-    save(updatedUser);
+    userRepository.save(updatedUser);
   }
 
   @Override
@@ -80,19 +92,5 @@ public class UserDataAdapter implements UserDataPort {
     return userRepository.existsByUsernameIgnoreCase(username);
   }
 
-  @Override
-  public boolean existsBy(final long id) {
-    return userRepository.existsById(id);
-  }
 
-  @Transactional
-  @Caching(evict = {
-      @CacheEvict(value = USERS_CACHE, key = "#username.charAt(0) + '*'"),
-      @CacheEvict(value = USERS_CACHE, key = "#username.substring(0, 2) + '*'"),
-      @CacheEvict(value = USERS_CACHE, key = "#username.substring(0, 3) + '*'"),
-      @CacheEvict(value = USERS_CACHE, key = ALL_USERS)
-  })
-  public void save(final UserEntity user) {
-    userRepository.save(user);
-  }
 }

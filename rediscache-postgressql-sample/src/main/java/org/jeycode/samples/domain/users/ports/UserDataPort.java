@@ -20,6 +20,4 @@ public interface UserDataPort {
 
   boolean existsBy(final String username);
 
-  boolean existsBy(final long id);
-
 }

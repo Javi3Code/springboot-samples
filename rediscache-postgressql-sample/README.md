@@ -27,7 +27,9 @@ run the next commands:
       [[ "${$(docker images | awk '{print $1}')[*]}" =~ "red-pos-sam" ]] && 
         docker rmi red-pos-sam:latest
       [[ "${$(docker volume ls | awk '{print $2}')[*]}" =~ "rediscache-postgressql-sample_postgres-data" ]] && 
-        docker volume rm rediscache-postgressql-sample_postgres-data  
+        docker volume rm rediscache-postgressql-sample_postgres-data
+      [[ "${$(docker volume ls | awk '{print $2}')[*]}" =~ "rediscache-postgressql-sample_redis-data" ]] &&
+        docker volume rm rediscache-postgressql-sample_redis-data
         mvn clean compile package -DskipTests --batch-mode --quiet -Pstandalone && 
         docker build . -t red-pos-sam && 
         docker-compose up
@@ -41,7 +43,8 @@ Postman, and you will have a collection with pre-configured requests for the ava
 ## Fake Data
 
 During startup, the application adds fake data using the Java Faker library. You can view the generated data in the
-mockdataconfiguration.class. This data provides a starting point for testing and interacting with the application.
+[mockdataconfiguration.class](https://github.com/Javi3Code/springboot-samples/blob/sample/redis-postgres/rediscache-postgressql-sample/src/main/java/org/jeycode/samples/MockDataConfiguration.java).
+This data provides a starting point for testing and interacting with the application.
 
 ## Conclusion
 
