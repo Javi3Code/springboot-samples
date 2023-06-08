@@ -50,7 +50,7 @@ public class UserController {
 
   @GetMapping(value = "api/v1/users", params = "username")
   public ResponseEntity<List<UserBasicInfoDto>> getAllByUsername(@RequestParam("username") @Size(min = 4) final String username) {
-    return ResponseEntity.ok(getUsersByUsernameUseCase.getAllBeginsWith(username));
+    return ResponseEntity.ok(getUsersByUsernameUseCase.getStartingWith(username));
   }
 
   @GetMapping("api/v1/pending-orders/users")

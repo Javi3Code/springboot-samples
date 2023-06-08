@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class GetUsersByUsernameService implements GetUsersByUsernameUseCase {
 
-  private final UserDataPort userDataPort;
   private final UsersMapper usersMapper;
+  private final UserDataPort userDataPort;
 
   @Override
-  public List<UserBasicInfoDto> getAllBeginsWith(final String username) {
-    return Optional.ofNullable(userDataPort.getAllByUsernameBeginsWith(username))
+  public List<UserBasicInfoDto> getStartingWith(final String username) {
+    return Optional.ofNullable(userDataPort.getAllByUsernameStartingWith(username))
         .map(usersMapper::toDto)
         .orElseThrow(() -> new UserNotFoundException(format("there are no users whose username begins with: [%s]", username)));
   }

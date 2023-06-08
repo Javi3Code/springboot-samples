@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateUserService implements CreateUserUseCase {
 
-  private final UserDataPort userDataPort;
   private final UsersMapper usersMapper;
+  private final UserDataPort userDataPort;
   private final UsernameGenerator usernameGenerator;
 
   @Override

@@ -1,7 +1,6 @@
 package org.jeycode.samples.application.users.services;
 
 import static java.lang.String.format;
-import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import lombok.RequiredArgsConstructor;
@@ -17,18 +16,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class PartialUpdateUserService implements UpdateUserUseCase {
 
-  private final UserDataPort userDataPort;
   private final UsersMapper usersMapper;
+  private final UserDataPort userDataPort;
 
   @Override
   public void update(final long id, final UpdatableUserDto user) {
-    final var actualUser = userDataPort.getBy(id);
-    if (isNull(actualUser)) {
-      throw new UserNotFoundException(format("User with id:[%s] doesn't exist", id));
-    }
-    if (this.haveDiffFields(user, actualUser)) {
-      userDataPort.update(usersMapper.toUser(id, actualUser.username(), user));
-    }
+    userDataPort.getBy(id)
+        .ifPresentOrElse(actualUser -> {
+          if (this.haveDiffFields(user, actualUser)) {
+            userDataPort.update(usersMapper.toUser(id, actualUser.username(), user));
+          }
+        }, () -> {
+          throw new UserNotFoundException(format("User with id:[%s] doesn't exist", id));
+        });
   }
 
   private boolean haveDiffFields(final UpdatableUserDto user, final User actualUser) {

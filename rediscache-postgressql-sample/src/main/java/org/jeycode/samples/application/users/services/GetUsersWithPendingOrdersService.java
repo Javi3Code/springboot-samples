@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class GetUsersWithPendingOrdersService implements GetUsersWithPendingOrdersUseCase {
 
-  private final UserDataPort userDataPort;
   private final UsersMapper usersMapper;
+  private final UserDataPort userDataPort;
 
   @Override
   public List<UserBasicInfoDto> get() {
