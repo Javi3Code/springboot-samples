@@ -2,7 +2,6 @@ package org.jeycode.samples.infra.books.adapters;
 
 import static org.jeycode.samples.domain.orders.models.OrderStatus.ACTIVE;
 import static org.jeycode.samples.infra.utils.Caches.ALL_AVAILABLE_BOOKS;
-import static org.jeycode.samples.infra.utils.Caches.ALL_BOOKS;
 import static org.jeycode.samples.infra.utils.Caches.BOOKS_CACHE;
 import static org.jeycode.samples.infra.utils.Caches.BOOK_GENRES;
 
@@ -51,7 +50,7 @@ public class BookDataAdapter implements BookDataPort {
     return bookRepository.findDistinctTitlesByAvailableCopiesGreaterThan(0);
   }
 
-  @Cacheable(value = BOOKS_CACHE, key = ALL_BOOKS + "#title", unless = "#result == null")
+  @Cacheable(value = BOOKS_CACHE, key = "#title", unless = "#result == null")
   @Override
   public List<Book> getByTitle(final String title) {
     logger.info("getBooksWithThis -- db action -- title: [{}]", title);
@@ -126,27 +125,34 @@ public class BookDataAdapter implements BookDataPort {
 
   @Caching(
       evict = {
-          @CacheEvict(value = BOOKS_CACHE, key = "#isbn"),
-          @CacheEvict(value = BOOKS_CACHE, key = ALL_BOOKS + "#book.title()"),
+          @CacheEvict(value = BOOKS_CACHE, key = "#book.isbn()"),
+          @CacheEvict(value = BOOKS_CACHE, key = "#book.title()"),
           @CacheEvict(value = BOOKS_CACHE, key = ALL_AVAILABLE_BOOKS),
           @CacheEvict(value = BOOKS_CACHE, key = BOOK_GENRES),
-          @CacheEvict(value = BOOKS_CACHE, key = ALL_BOOKS + "#book.genre()")
+          @CacheEvict(value = BOOKS_CACHE, key = "#book.genre()")
       })
   @Transactional
   @Override
   public void addCopiesOf(final Book book) {
+    logger.info("""
+        addCopiesOfBook -- db action -- book:
+               {}""", book);
     bookRepository.updateAvailableCopies(book.isbn(), book.availableCopies());
   }
 
   @Caching(
       evict = {
-          @CacheEvict(value = BOOKS_CACHE, key = ALL_BOOKS + "#book.title()"),
+          @CacheEvict(value = BOOKS_CACHE, key = "#book.title()"),
           @CacheEvict(value = BOOKS_CACHE, key = BOOK_GENRES),
-          @CacheEvict(value = BOOKS_CACHE, key = ALL_BOOKS + "#book.genre()")
-      })
+          @CacheEvict(value = BOOKS_CACHE, key = "#book.genre()")
+      }
+  )
   @Transactional
   @Override
   public void register(final Book book) {
+    logger.info("""
+        registerBook -- db action -- book:
+               {}""", book);
     bookRepository.save(bookEntityMapper.toEntity(book));
   }
 

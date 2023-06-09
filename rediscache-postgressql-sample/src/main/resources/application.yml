@@ -27,7 +27,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+  #    show-sql: true
   cache:
     cache-names: users, orders, books
     ttl:

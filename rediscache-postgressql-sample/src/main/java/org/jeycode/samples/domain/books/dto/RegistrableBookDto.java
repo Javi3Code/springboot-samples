@@ -9,7 +9,7 @@ import org.jeycode.samples.domain.books.models.BookGenre;
 
 public record RegistrableBookDto(@NotBlank String title,
                                  @NotBlank String author,
-                                 @NotBlank BookGenre genre,
+                                 @NotNull BookGenre genre,
                                  @Positive byte availableCopies,
                                  @Positive BigDecimal pricePerDay,
                                  @NotNull Year publicationYear,

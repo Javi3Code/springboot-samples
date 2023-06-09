@@ -70,6 +70,9 @@ public class UserDataAdapter implements UserDataPort {
   @Transactional
   @Override
   public void register(final User user) {
+    logger.info("""
+        registerUser -- db action -- user:
+                {}""", user);
     final var newUser = userEntityMapper.toEntity(user);
     userRepository.save(newUser);
   }
@@ -83,6 +86,9 @@ public class UserDataAdapter implements UserDataPort {
   @Transactional
   @Override
   public void update(final User user) {
+    logger.info("""
+        updateUser -- db action -- user:
+               {}""", user);
     final var userEntity = userRepository.getReferenceById(user.id());
     final var updatedUser = userEntityMapper.partialUpdate(user, userEntity);
     userRepository.save(updatedUser);
