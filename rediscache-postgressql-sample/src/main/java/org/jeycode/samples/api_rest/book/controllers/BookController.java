@@ -1,11 +1,17 @@
 package org.jeycode.samples.api_rest.book.controllers;
 
+import static org.jeycode.samples.domain.aaa_core.search.dto.ObjectType.BOOKS;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.jeycode.samples.api_rest.aaa_core.exceptions_handler.annotations.SearchFields;
+import org.jeycode.samples.domain.aaa_core.search.dto.DataPage;
+import org.jeycode.samples.domain.aaa_core.search.dto.SearchCriteria;
 import org.jeycode.samples.domain.books.dtos.BookBasicInfoDto;
 import org.jeycode.samples.domain.books.dtos.BookCopiesWrapper;
 import org.jeycode.samples.domain.books.dtos.RegistrableBookDto;
@@ -15,6 +21,7 @@ import org.jeycode.samples.domain.books.usecases.GetAvailableBookTitlesUseCase;
 import org.jeycode.samples.domain.books.usecases.GetBookByIsbnUseCase;
 import org.jeycode.samples.domain.books.usecases.GetBookByTitleUseCase;
 import org.jeycode.samples.domain.books.usecases.GetBooksGenresUseCase;
+import org.jeycode.samples.domain.books.usecases.GetBooksWithAdvancedSearchUseCase;
 import org.jeycode.samples.domain.books.usecases.RegisterBookUseCase;
 import org.jeycode.samples.domain.books.usecases.RegisterCopiesOfBookUseCase;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
 
   private final GetBookByIsbnUseCase getBookByIsbnUseCase;
+  private final GetBooksWithAdvancedSearchUseCase getBooksWithAdvancedSearchUseCase;
   private final GetBookByTitleUseCase getBookByTitleUseCase;
   private final GetAvailableBookTitlesUseCase getAvailableBookTitlesUseCase;
   private final GetBooksGenresUseCase getBookGenresUseCase;
@@ -40,6 +48,12 @@ public class BookController {
   @GetMapping("api/v1/books/{isbn}")
   public ResponseEntity<Book> get(@PathVariable(value = "isbn", required = true) @Valid @NotBlank final String isbn) {
     return ResponseEntity.ok(getBookByIsbnUseCase.get(isbn));
+  }
+
+  @GetMapping("api/v1/books")
+  public ResponseEntity<DataPage<List<Map<String, Object>>>> getAllBy(
+      @RequestBody(required = true) @Valid @SearchFields(of = BOOKS) final SearchCriteria searchCriteria) {
+    return ResponseEntity.ok(getBooksWithAdvancedSearchUseCase.getBy(searchCriteria));
   }
 
   @GetMapping("api/v1/book")

@@ -6,5 +6,5 @@ public enum SearchStrategy {
   END_WITH,
   GREATER_THAN,
   EQUAL_TO,
-  LEES_THAN
+  LESS_THAN
 }

@@ -1,15 +1,14 @@
 package org.jeycode.samples.domain.aaa_core.search.dto;
 
-import java.util.Set;
 import org.jeycode.samples.domain.books.models.Book;
 
 public enum ObjectType {
   ORDERS(null),
-  BOOKS(Book.VISIBLE_FIELDS);
+  BOOKS(Book.SEARCH_CONSTRAINTS);
 
-  public final Set<String> visibleFields;
+  public final SearchConstraints searchConstraints;
 
-  ObjectType(final Set<String> visibleFields) {
-    this.visibleFields = visibleFields;
+  ObjectType(final SearchConstraints searchConstraints) {
+    this.searchConstraints = searchConstraints;
   }
 }

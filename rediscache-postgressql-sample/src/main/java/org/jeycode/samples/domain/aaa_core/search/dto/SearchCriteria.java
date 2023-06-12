@@ -8,7 +8,10 @@ public record SearchCriteria(
     @NotNull @Size(min = 1)
     Set<SearchCriteriaFilter> filters,
     @NotNull @Size(min = 1)
-    Set<String> bookFieldsToReturn
+    Set<String> fieldsToReturn,
+
+    @NotNull
+    DataPaginator dataPaginator
 
 ) {
 
