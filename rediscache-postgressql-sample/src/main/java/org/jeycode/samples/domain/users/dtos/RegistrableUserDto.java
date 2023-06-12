@@ -1,4 +1,4 @@
-package org.jeycode.samples.domain.users.dto;
+package org.jeycode.samples.domain.users.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

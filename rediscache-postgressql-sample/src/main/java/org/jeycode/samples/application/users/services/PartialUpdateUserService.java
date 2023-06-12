@@ -5,15 +5,15 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import lombok.RequiredArgsConstructor;
 import org.jeycode.samples.application.users.mappers.UsersMapper;
-import org.jeycode.samples.domain.users.dto.UpdatableUserDto;
+import org.jeycode.samples.application.utils.UseCase;
+import org.jeycode.samples.domain.users.dtos.UpdatableUserDto;
 import org.jeycode.samples.domain.users.exceptions.UserNotFoundException;
 import org.jeycode.samples.domain.users.models.User;
 import org.jeycode.samples.domain.users.ports.UserDataPort;
 import org.jeycode.samples.domain.users.usecases.UpdateUserUseCase;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-@Service
+@UseCase
 public class PartialUpdateUserService implements UpdateUserUseCase {
 
   private final UsersMapper usersMapper;

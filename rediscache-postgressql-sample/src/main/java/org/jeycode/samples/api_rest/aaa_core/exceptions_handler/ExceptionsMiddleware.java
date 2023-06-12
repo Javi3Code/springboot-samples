@@ -1,4 +1,4 @@
-package org.jeycode.samples.api_rest.exceptions_handler;
+package org.jeycode.samples.api_rest.aaa_core.exceptions_handler;
 
 import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.springframework.http.HttpStatus.NOT_FOUND;

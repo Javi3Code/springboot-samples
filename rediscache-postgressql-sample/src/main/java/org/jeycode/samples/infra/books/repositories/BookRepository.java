@@ -1,10 +1,8 @@
 package org.jeycode.samples.infra.books.repositories;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.jeycode.samples.domain.books.models.BookGenre;
-import org.jeycode.samples.domain.orders.models.OrderStatus;
 import org.jeycode.samples.infra.books.jpa_entities.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -28,24 +26,18 @@ public interface BookRepository extends JpaRepository<BookEntity, String>, JpaSp
 
   Optional<BookEntity> findFirstByTitleIgnoreCase(final String title);
 
+  @Query("""
+      select distinct b.title
+      from BookEntity b
+      where b.availableCopies > ?1""")
   Set<String> findDistinctTitlesByAvailableCopiesGreaterThan(final int availableCopies);
-
-  List<BookEntity> findByTitle(final String title);
-
-  List<BookEntity> findByTitleStartsWithIgnoreCase(final String title);
-
-  List<BookEntity> findByTitleAndAvailableCopiesGreaterThan(final String title, final int availableCopies);
 
   boolean existsByTitleAndAvailableCopiesGreaterThan(final String title, final int availableCopies);
 
-  List<BookEntity> findByAuthor(final String author);
 
-  List<BookEntity> findByAuthorAndTitleContaining(final String author, final String titleKeywords);
-
-  @Query("select distinct b from BookEntity b")
+  @Query("""
+      select distinct b.genre
+      from BookEntity b""")
   Set<BookGenre> findDistinctGenre();
 
-  List<BookEntity> findByGenre(final BookGenre genre);
-
-  List<BookEntity> findByOrdersStatus(final OrderStatus status);
 }

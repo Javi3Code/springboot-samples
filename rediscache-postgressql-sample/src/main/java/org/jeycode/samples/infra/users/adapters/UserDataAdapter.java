@@ -1,7 +1,7 @@
 package org.jeycode.samples.infra.users.adapters;
 
-import static org.jeycode.samples.infra.utils.Caches.ALL_USERS;
-import static org.jeycode.samples.infra.utils.Caches.USERS_CACHE;
+import static org.jeycode.samples.infra.aaa_core.utils.Caches.ALL_USERS;
+import static org.jeycode.samples.infra.aaa_core.utils.Caches.USERS_CACHE;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeycode.samples.domain.orders.models.OrderStatus;
 import org.jeycode.samples.domain.users.models.User;
 import org.jeycode.samples.domain.users.ports.UserDataPort;
+import org.jeycode.samples.infra.aaa_core.annotations.DatabaseAdapter;
 import org.jeycode.samples.infra.users.mapper.UserEntityMapper;
 import org.jeycode.samples.infra.users.repositories.UserRepository;
-import org.jeycode.samples.infra.utils.DatabaseAdapter;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;

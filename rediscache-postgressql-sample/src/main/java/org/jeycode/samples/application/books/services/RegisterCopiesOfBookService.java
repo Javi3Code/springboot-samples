@@ -4,13 +4,13 @@ import static java.lang.String.format;
 
 import lombok.RequiredArgsConstructor;
 import org.jeycode.samples.application.books.mappers.BookMapper;
+import org.jeycode.samples.application.utils.UseCase;
 import org.jeycode.samples.domain.books.exceptions.BookNotFoundException;
 import org.jeycode.samples.domain.books.ports.BookDataPort;
 import org.jeycode.samples.domain.books.usecases.RegisterCopiesOfBookUseCase;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-@Service
+@UseCase
 public class RegisterCopiesOfBookService implements RegisterCopiesOfBookUseCase {
 
   private final BookMapper bookMapper;

@@ -2,13 +2,13 @@ package org.jeycode.samples.application.books.services;
 
 import lombok.RequiredArgsConstructor;
 import org.jeycode.samples.application.books.mappers.BookMapper;
-import org.jeycode.samples.domain.books.dto.RegistrableBookDto;
+import org.jeycode.samples.application.utils.UseCase;
+import org.jeycode.samples.domain.books.dtos.RegistrableBookDto;
 import org.jeycode.samples.domain.books.ports.BookDataPort;
 import org.jeycode.samples.domain.books.usecases.RegisterBookUseCase;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-@Service
+@UseCase
 public class RegisterBookService implements RegisterBookUseCase {
 
   private final BookMapper bookMapper;

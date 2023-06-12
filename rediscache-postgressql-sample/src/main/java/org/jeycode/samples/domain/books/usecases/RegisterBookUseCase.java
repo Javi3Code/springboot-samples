@@ -1,6 +1,6 @@
 package org.jeycode.samples.domain.books.usecases;
 
-import org.jeycode.samples.domain.books.dto.RegistrableBookDto;
+import org.jeycode.samples.domain.books.dtos.RegistrableBookDto;
 
 public interface RegisterBookUseCase {
 

@@ -1,4 +1,4 @@
-package org.jeycode.samples.domain.books.dto;
+package org.jeycode.samples.domain.books.dtos;
 
 import jakarta.validation.constraints.Positive;
 

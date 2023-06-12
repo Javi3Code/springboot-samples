@@ -44,6 +44,19 @@
       <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-jpamodelgen -->
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-jpamodelgen</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>4.0.0</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
     <dependency>
       <groupId>org.postgresql</groupId>

@@ -3,13 +3,13 @@ package org.jeycode.samples.application.users.services;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jeycode.samples.application.users.mappers.UsersMapper;
-import org.jeycode.samples.domain.users.dto.UserBasicInfoDto;
+import org.jeycode.samples.application.utils.UseCase;
+import org.jeycode.samples.domain.users.dtos.UserBasicInfoDto;
 import org.jeycode.samples.domain.users.ports.UserDataPort;
 import org.jeycode.samples.domain.users.usecases.GetUsersUseCase;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-@Service
+@UseCase
 public class GetUsersService implements GetUsersUseCase {
 
   private final UsersMapper usersMapper;

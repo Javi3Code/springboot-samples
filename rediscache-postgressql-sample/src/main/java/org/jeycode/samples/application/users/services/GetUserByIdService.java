@@ -3,14 +3,14 @@ package org.jeycode.samples.application.users.services;
 import static java.lang.String.format;
 
 import lombok.RequiredArgsConstructor;
+import org.jeycode.samples.application.utils.UseCase;
 import org.jeycode.samples.domain.users.exceptions.UserNotFoundException;
 import org.jeycode.samples.domain.users.models.User;
 import org.jeycode.samples.domain.users.ports.UserDataPort;
 import org.jeycode.samples.domain.users.usecases.GetUserByIdUseCase;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-@Service
+@UseCase
 public class GetUserByIdService implements GetUserByIdUseCase {
 
   private final UserDataPort userDataPort;

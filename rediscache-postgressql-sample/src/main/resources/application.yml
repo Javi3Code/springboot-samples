@@ -15,6 +15,11 @@ server:
   servlet:
     context-path: /red-pos-sam
 spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
   config:
     activate:
       on-profile: standalone
