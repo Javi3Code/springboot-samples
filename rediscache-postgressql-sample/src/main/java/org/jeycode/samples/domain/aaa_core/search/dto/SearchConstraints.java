@@ -11,7 +11,7 @@ import lombok.Value;
 import org.jeycode.samples.domain.aaa_core.search.enums.SearchStrategy;
 
 @RequiredArgsConstructor
-@Value(staticConstructor = "of")
+@Value
 public class SearchConstraints {
 
   public Set<String> visibleFields;

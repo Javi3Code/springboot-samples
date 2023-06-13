@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "INIT_DATA")
+@ConditionalOnProperty(value = "INIT_DATA", havingValue = "true", matchIfMissing = false)
 @Configuration
 public class MockDataConfiguration {
 

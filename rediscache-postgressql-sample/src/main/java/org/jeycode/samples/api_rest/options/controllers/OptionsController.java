@@ -1,4 +1,4 @@
-package org.jeycode.samples.api_rest.options;
+package org.jeycode.samples.api_rest.options.controllers;
 
 import java.util.Set;
 import lombok.RequiredArgsConstructor;

@@ -7,6 +7,7 @@ import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import java.util.HashSet;
 import org.jeycode.samples.api_rest.aaa_core.exceptions_handler.annotations.SearchFields;
 import org.jeycode.samples.domain.aaa_core.search.dto.SearchConstraints;
 import org.jeycode.samples.domain.aaa_core.search.dto.SearchCriteria;
@@ -27,9 +28,9 @@ public class SearchFieldsValidator implements ConstraintValidator<SearchFields, 
 
   @Override
   public boolean isValid(final SearchCriteria criteria, final ConstraintValidatorContext context) {
-    final var fieldsToReturn = criteria.fieldsToReturn();
+    final var fieldsToReturn = new HashSet<>(criteria.fieldsToReturn());
     searchConstraints.removeIntersection(fieldsToReturn, searchConstraints.visibleFields);
-    final var filters = criteria.filters();
+    final var filters = new HashSet<>(criteria.filters());
     final var mapOfValidFilterNames = searchConstraints.extractMapOfFilterFieldsNames(filters);
     final var purgedFilterFields = mapOfValidFilterNames.get(true);
     final var invalidFilterFields = mapOfValidFilterNames.get(false);
@@ -61,7 +62,7 @@ public class SearchFieldsValidator implements ConstraintValidator<SearchFields, 
       }
       if (fieldValuesAreInvalid) {
         context.buildConstraintViolationWithTemplate(
-                format("There are invalid values for these fields : %s.", join(", ", invalidFieldsValues)))
+                format("There are invalid values for these fields : %s", join(", ", invalidFieldsValues)))
             .addConstraintViolation();
       }
       context.disableDefaultConstraintViolation();

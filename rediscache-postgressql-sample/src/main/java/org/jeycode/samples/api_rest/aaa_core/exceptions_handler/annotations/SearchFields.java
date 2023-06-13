@@ -15,7 +15,7 @@ import org.jeycode.samples.domain.aaa_core.search.dto.ObjectType;
 @Constraint(validatedBy = SearchFieldsValidator.class)
 public @interface SearchFields {
 
-  String message() default "The fields %s are not valid fields to return.";
+  String message() default "The fields %s are not valid fields to return";
 
   Class<?>[] groups() default {};
 
@@ -24,5 +24,5 @@ public @interface SearchFields {
   @NotNull
   ObjectType of();
 
-  String auxMessage() default "The fields %s are not valid fields to filter.";
+  String auxMessage() default "The fields %s are not valid fields to filter";
 }
