@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="rediscache-postgressql-sample [spring-boot:run]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+  <configuration default="false" name="rediscache-postgressql-sample [spring-boot:run]" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -11,6 +11,8 @@
           <option name="goals">
             <list>
               <option value="spring-boot:run" />
+              <option value="-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -DINIT_DATA=true" />
+              <option value="-Dspring-boot.run.profiles=standalone" />
             </list>
           </option>
           <option name="pomFileName" />

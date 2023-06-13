@@ -1,34 +1,34 @@
 package org.jeycode.samples.application.users.services;
 
 import static java.lang.String.format;
-import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import lombok.RequiredArgsConstructor;
 import org.jeycode.samples.application.users.mappers.UsersMapper;
-import org.jeycode.samples.domain.users.dto.UpdatableUserDto;
+import org.jeycode.samples.application.utils.UseCase;
+import org.jeycode.samples.domain.users.dtos.UpdatableUserDto;
 import org.jeycode.samples.domain.users.exceptions.UserNotFoundException;
 import org.jeycode.samples.domain.users.models.User;
 import org.jeycode.samples.domain.users.ports.UserDataPort;
 import org.jeycode.samples.domain.users.usecases.UpdateUserUseCase;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-@Service
+@UseCase
 public class PartialUpdateUserService implements UpdateUserUseCase {
 
-  private final UserDataPort userDataPort;
   private final UsersMapper usersMapper;
+  private final UserDataPort userDataPort;
 
   @Override
   public void update(final long id, final UpdatableUserDto user) {
-    final var actualUser = userDataPort.getBy(id);
-    if (isNull(actualUser)) {
-      throw new UserNotFoundException(format("User with id:[%s] doesn't exist", id));
-    }
-    if (this.haveDiffFields(user, actualUser)) {
-      userDataPort.update(usersMapper.toUser(id, actualUser.username(), user));
-    }
+    userDataPort.getBy(id)
+        .ifPresentOrElse(actualUser -> {
+          if (this.haveDiffFields(user, actualUser)) {
+            userDataPort.update(usersMapper.toUser(id, actualUser.username(), user));
+          }
+        }, () -> {
+          throw new UserNotFoundException(format("User with id:[%s] doesn't exist", id));
+        });
   }
 
   private boolean haveDiffFields(final UpdatableUserDto user, final User actualUser) {

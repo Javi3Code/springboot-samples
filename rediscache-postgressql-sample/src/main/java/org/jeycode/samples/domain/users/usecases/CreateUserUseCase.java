@@ -1,6 +1,6 @@
 package org.jeycode.samples.domain.users.usecases;
 
-import org.jeycode.samples.domain.users.dto.RegistrableUserDto;
+import org.jeycode.samples.domain.users.dtos.RegistrableUserDto;
 
 public interface CreateUserUseCase {
 

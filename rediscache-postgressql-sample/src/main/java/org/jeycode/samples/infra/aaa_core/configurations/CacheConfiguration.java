@@ -1,4 +1,4 @@
-package org.jeycode.samples;
+package org.jeycode.samples.infra.aaa_core.configurations;
 
 import java.time.Duration;
 import java.util.HashMap;
