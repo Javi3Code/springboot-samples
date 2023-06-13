@@ -1,9 +1,9 @@
 package org.jeycode.samples.application.users.mappers;
 
 import java.util.List;
-import org.jeycode.samples.domain.users.dto.RegistrableUserDto;
-import org.jeycode.samples.domain.users.dto.UpdatableUserDto;
-import org.jeycode.samples.domain.users.dto.UserBasicInfoDto;
+import org.jeycode.samples.domain.users.dtos.RegistrableUserDto;
+import org.jeycode.samples.domain.users.dtos.UpdatableUserDto;
+import org.jeycode.samples.domain.users.dtos.UserBasicInfoDto;
 import org.jeycode.samples.domain.users.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants.ComponentModel;

@@ -9,13 +9,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Year;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -57,6 +55,6 @@ public class BookEntity {
   private String description;
 
   @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-  private Set<OrderEntity> orders = new HashSet<>();;
+  private Set<OrderEntity> orders = new HashSet<>();
 }
 

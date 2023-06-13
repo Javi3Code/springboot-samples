@@ -1,6 +1,6 @@
 package org.jeycode.samples.domain.users.usecases;
 
-import org.jeycode.samples.domain.users.dto.UpdatableUserDto;
+import org.jeycode.samples.domain.users.dtos.UpdatableUserDto;
 
 public interface UpdateUserUseCase {
 

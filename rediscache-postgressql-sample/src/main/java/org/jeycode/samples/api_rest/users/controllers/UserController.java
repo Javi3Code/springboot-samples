@@ -7,9 +7,9 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.jeycode.samples.domain.users.dto.RegistrableUserDto;
-import org.jeycode.samples.domain.users.dto.UpdatableUserDto;
-import org.jeycode.samples.domain.users.dto.UserBasicInfoDto;
+import org.jeycode.samples.domain.users.dtos.RegistrableUserDto;
+import org.jeycode.samples.domain.users.dtos.UpdatableUserDto;
+import org.jeycode.samples.domain.users.dtos.UserBasicInfoDto;
 import org.jeycode.samples.domain.users.models.User;
 import org.jeycode.samples.domain.users.usecases.CreateUserUseCase;
 import org.jeycode.samples.domain.users.usecases.GetUserByIdUseCase;
@@ -49,8 +49,8 @@ public class UserController {
   }
 
   @GetMapping(value = "api/v1/users", params = "username")
-  public ResponseEntity<List<UserBasicInfoDto>> getAllByUsername(@RequestParam("username") @Size(min = 4) final String username) {
-    return ResponseEntity.ok(getUsersByUsernameUseCase.getAllBeginsWith(username));
+  public ResponseEntity<List<UserBasicInfoDto>> getAllByUsername(@RequestParam("username") @Valid @Size(min = 4) final String username) {
+    return ResponseEntity.ok(getUsersByUsernameUseCase.getStartingWith(username));
   }
 
   @GetMapping("api/v1/pending-orders/users")
