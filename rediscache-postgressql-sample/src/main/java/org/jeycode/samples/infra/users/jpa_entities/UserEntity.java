@@ -11,14 +11,14 @@ import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.jeycode.samples.infra.orders.jpa_entities.OrderEntity;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @Entity
 @Table(indexes = @Index(name = "idx_user_username", columnList = "username"))
@@ -26,8 +26,7 @@ public class UserEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @EqualsAndHashCode.Include
-  private long id;
+  private Long id;
 
   @Column(nullable = false, unique = true)
   private String username;
@@ -37,6 +36,23 @@ public class UserEntity {
 
   @Column(nullable = false)
   private String lastName;
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    final UserEntity that = (UserEntity) o;
+    return getId() != null && Objects.equals(getId(), that.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
+  }
 
   @Column(nullable = false)
   private String email;

@@ -19,16 +19,16 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.jeycode.samples.domain.orders.models.OrderStatus;
 import org.jeycode.samples.infra.books.jpa_entities.BookEntity;
 import org.jeycode.samples.infra.users.jpa_entities.UserEntity;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(exclude = {"user", "books"})
 @Entity
 @Table(indexes = @Index(name = "idx_order_status", columnList = "status"))
@@ -36,8 +36,7 @@ public class OrderEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @EqualsAndHashCode.Include
-  private long id;
+  private Long id;
 
   @Column(nullable = false, updatable = false)
   private OffsetDateTime rentalStartDate;
@@ -47,6 +46,23 @@ public class OrderEntity {
 
   @Column(nullable = true)
   private BigDecimal totalPrice;
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    final OrderEntity that = (OrderEntity) o;
+    return getId() != null && Objects.equals(getId(), that.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
+  }
 
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)

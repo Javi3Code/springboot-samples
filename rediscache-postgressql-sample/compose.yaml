@@ -25,29 +25,29 @@ services:
       - 'redis'
     volumes:
       - 'postgres-data:/var/lib/postgresql/data'
-      #  red-pos-sam-writer:
-      #    image: 'red-pos-sam'
-      #    container_name: red-pos-sam-writer
-      #    ports:
-      #      - '8080:8080'
-      #    depends_on:
-      #      - 'postgresDB'
-      #    environment:
-      #      - REDIS_HOST=redis
-      #      - REDIS_PORT=6379
-      #      - DB_HOST=postgresDB
-      #  red-pos-sam-reader:
-      #    image: 'red-pos-sam'
-      #    container_name: red-pos-sam-reader
-      #    ports:
-      #      - '8081:8080'
-      #    depends_on:
-      #      - 'red-pos-sam-writer'
-      #    environment:
-      #      - INIT_DATA=true
-      #      - REDIS_HOST=redis
-      #      - REDIS_PORT=6379
-#      - DB_HOST=postgresDB
+  red-pos-sam-writer:
+    image: 'red-pos-sam'
+    container_name: red-pos-sam-writer
+    ports:
+      - '8080:8080'
+    depends_on:
+      - 'postgresDB'
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_HOST=postgresDB
+  red-pos-sam-reader:
+    image: 'red-pos-sam'
+    container_name: red-pos-sam-reader
+    ports:
+      - '8081:8080'
+    depends_on:
+      - 'red-pos-sam-writer'
+    environment:
+      - INIT_DATA=true
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_HOST=postgresDB
 volumes:
   redis-data:
   postgres-data:
